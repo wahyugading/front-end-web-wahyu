@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useAuth } from '../hooks/useAuth'; // [cite: 602]
 import { useNavigate } from 'react-router-dom'; // [cite: 603]
 
+// Komponen Logo dengan URL yang sudah benar
 function BpsLogo() {
     return (
         <img
-            src="https://res.cloudinary.com/djcm0swgo/image/upload/v1751775675/bps-logo_1_ldppzk.png"
+            src="https://res.cloudinary.com/djcm0swgo/image/upload/v1751775675/bps-logo_1_1dppzk.png"
             alt="BPS Logo"
             className="h-12 w-12"
         />
@@ -13,26 +14,22 @@ function BpsLogo() {
 }
 
 export default function LoginPage() {
-    // Menggunakan email agar konsisten dengan backend (authService)
     const [email, setEmail] = useState(""); 
     const [password, setPassword] = useState("");
-
-    const { loginAction, error, loading } = useAuth(); // 
+    const { loginAction, error, loading } = useAuth();
     const navigate = useNavigate(); // [cite: 608]
 
     const handleSubmit = async (e) => { // 
         e.preventDefault(); // [cite: 612]
-        if (!email || !password) { // [cite: 614]
+         if (!email || !password) { // [cite: 614]
             alert('Email dan password harus diisi!'); // [cite: 616]
             return;
         }
         
         try {
             await loginAction(email, password); // [cite: 618]
-            navigate('/publications'); // 
+            navigate('/publications');
         } catch (err) {
-            // Error sudah ditangani di dalam AuthContext, 
-            // kita hanya perlu memastikan form tidak lanjut
             console.error('Login failed:', err); // [cite: 622]
         }
     };
@@ -41,8 +38,12 @@ export default function LoginPage() {
         <div className="flex justify-center items-center h-screen bg-blue-100 bg-cover bg-center m-0 p-0">
             <div className="bg-white p-8 rounded-xl shadow-lg w-96">
                 
+                {/* === BAGIAN YANG DIPERBAIKI === */}
+                <div className="flex justify-center mb-4">
+                    <BpsLogo />
+                </div>
                 
-                {/* Komponen untuk menampilkan pesan error [cite: 626, 627] */}
+                {/* Komponen untuk menampilkan pesan error */}
                 {error && (
                     <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm">
                         <div className="flex items-center">
@@ -57,21 +58,18 @@ export default function LoginPage() {
                         </div>
                     </div>
                 )}
-                <div className="flex items-center mb-4">
-                    <BpsLogo />    
-                </div>
-                
+
                 <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label
-                            htmlFor="email" // Diubah dari username ke email
+                            htmlFor="email"
                             className="block text-sm font-medium text-gray-600"
                         >
                             Email
                         </label>
                         <input
-                            type="email" // Diubah dari text ke email
+                            type="email"
                             id="email"
                             className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg"
                             placeholder="Masukkan email"
@@ -100,7 +98,7 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         className="w-full bg-blue-600 text-white py-2 rounded-lg"
-                        disabled={loading} // Opsional: menonaktifkan tombol saat loading
+                        disabled={loading}
                     >
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
