@@ -2,6 +2,16 @@ import { useState } from "react";
 import { useAuth } from '../hooks/useAuth'; // [cite: 602]
 import { useNavigate } from 'react-router-dom'; // [cite: 603]
 
+function BpsLogo() {
+    return (
+        <img
+            src="https://res.cloudinary.com/djcm0swgo/image/upload/v1751775675/bps-logo_1_ldppzk.png"
+            alt="BPS Logo"
+            className="h-12 w-12"
+        />
+    );
+}
+
 export default function LoginPage() {
     // Menggunakan email agar konsisten dengan backend (authService)
     const [email, setEmail] = useState(""); 
@@ -31,11 +41,7 @@ export default function LoginPage() {
         <div className="flex justify-center items-center h-screen bg-blue-100 bg-cover bg-center m-0 p-0">
             <div className="bg-white p-8 rounded-xl shadow-lg w-96">
                 <div className="flex justify-center mb-4">
-                    <img
-                        src="src/assets/logoBPS.png" // Pastikan path ini benar
-                        alt="Logo"
-                        className="h-18 w-auto"
-                    />
+                    <BpsLogo />
                 </div>
                 
                 {/* Komponen untuk menampilkan pesan error [cite: 626, 627] */}
