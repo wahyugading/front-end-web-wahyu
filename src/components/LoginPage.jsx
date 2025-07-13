@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'; // [cite: 603]
 function BpsLogo() {
     return (
         <img
-            src="https://res.cloudinary.com/djcm0swgo/image/upload/v1751775675/bps-logo_1_1dppzk.png"
+            src="https://res.cloudinary.com/djcm0swgo/image/upload/v1751775675/bps-logo_1_ldppzk.png"
             alt="BPS Logo"
             className="h-12 w-12"
         />
