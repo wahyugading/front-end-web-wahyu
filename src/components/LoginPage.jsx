@@ -41,7 +41,7 @@ export default function LoginPage() {
         <div className="flex justify-center items-center h-screen bg-blue-100 bg-cover bg-center m-0 p-0">
             <div className="bg-white p-8 rounded-xl shadow-lg w-96">
                 <div className="flex justify-center mb-4">
-                    <BpsLogo />
+                    
                 </div>
                 
                 {/* Komponen untuk menampilkan pesan error [cite: 626, 627] */}
@@ -59,6 +59,7 @@ export default function LoginPage() {
                         </div>
                     </div>
                 )}
+                <BpsLogo />
 
                 <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
                 <form onSubmit={handleSubmit}>
