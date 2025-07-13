@@ -1,0 +1,104 @@
+import { useState } from "react";
+import { useAuth } from '../hooks/useAuth'; // [cite: 602]
+import { useNavigate } from 'react-router-dom'; // [cite: 603]
+
+export default function LoginPage() {
+    // Menggunakan email agar konsisten dengan backend (authService)
+    const [email, setEmail] = useState(""); 
+    const [password, setPassword] = useState("");
+
+    const { loginAction, error, loading } = useAuth(); // 
+    const navigate = useNavigate(); // [cite: 608]
+
+    const handleSubmit = async (e) => { // 
+        e.preventDefault(); // [cite: 612]
+        if (!email || !password) { // [cite: 614]
+            alert('Email dan password harus diisi!'); // [cite: 616]
+            return;
+        }
+        
+        try {
+            await loginAction(email, password); // [cite: 618]
+            navigate('/publications'); // 
+        } catch (err) {
+            // Error sudah ditangani di dalam AuthContext, 
+            // kita hanya perlu memastikan form tidak lanjut
+            console.error('Login failed:', err); // [cite: 622]
+        }
+    };
+
+    return (
+        <div className="flex justify-center items-center h-screen bg-blue-100 bg-cover bg-center m-0 p-0">
+            <div className="bg-white p-8 rounded-xl shadow-lg w-96">
+                <div className="flex justify-center mb-4">
+                    <img
+                        src="src/assets/logoBPS.png" // Pastikan path ini benar
+                        alt="Logo"
+                        className="h-18 w-auto"
+                    />
+                </div>
+                
+                {/* Komponen untuk menampilkan pesan error [cite: 626, 627] */}
+                {error && (
+                    <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm">
+                        <div className="flex items-center">
+                            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    fillRule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                            {error}
+                        </div>
+                    </div>
+                )}
+
+                <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <label
+                            htmlFor="email" // Diubah dari username ke email
+                            className="block text-sm font-medium text-gray-600"
+                        >
+                            Email
+                        </label>
+                        <input
+                            type="email" // Diubah dari text ke email
+                            id="email"
+                            className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg"
+                            placeholder="Masukkan email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="mb-6">
+                        <label
+                            htmlFor="password"
+                            className="block text-sm font-medium text-gray-600"
+                        >
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            id="password"
+                            className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg"
+                            placeholder="Masukkan password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-600 text-white py-2 rounded-lg"
+                        disabled={loading} // Opsional: menonaktifkan tombol saat loading
+                    >
+                        {loading ? 'Logging in...' : 'Login'}
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+}
